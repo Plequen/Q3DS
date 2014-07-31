@@ -62,6 +62,15 @@ int main() {
   for (unsigned int i = 0 ; i < points.size() ; i++)
     cout << points[i]->value << ", ";
   cout << endl;
+  cout << endl;
+
+
+  //
+  // Meshes
+  //
+  cout << "------------------" << endl;
+  cout << "Meshes" << endl;
+  cout << "------------------" << endl;
 
   return 0;
 }
