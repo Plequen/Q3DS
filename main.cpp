@@ -3,6 +3,9 @@
 #include "ray.h"
 #include "boundingbox.h"
 #include "octree.h"
+#include "mesh.h"
+#include "triangle.h"
+#include "vertex.h"
 
 using namespace std;
 using namespace q3ds;
@@ -71,6 +74,39 @@ int main() {
   cout << "------------------" << endl;
   cout << "Meshes" << endl;
   cout << "------------------" << endl;
+  Mesh mesh;
+  qm::Vec3f position1(-1.f, -1.f, 0.f);
+  qm::Vec3f normal1(0.f, 0.f, 1.f);
+  qm::Vec3f position2(1.f, -1.f, 0.f);
+  qm::Vec3f position3(1.f, 1.f, 0.f);
+  qm::Vec3f position4(-1.f, 1.f, 0.f);
+  mesh.addPosition(position1);
+  mesh.addNormal(normal1);
+  mesh.addPosition(position2);
+  mesh.addPosition(position3);
+  mesh.addPosition(position4);
+  Triangle triangle1(0, 1, 2, 0, 0, 0);
+  Triangle triangle2(0, 2, 3, 0, 0, 0);
+  mesh.addTriangle(triangle1);
+  mesh.addTriangle(triangle2);
+
+  float* positions = new float[mesh.trianglesNumber() * 3 * 3];
+  float* normals = new float[mesh.trianglesNumber() * 3 * 3];
+  float* uvs = NULL;
+
+  cout << "Compute vertices" << endl;
+  mesh.computeVertices(positions, normals, uvs);
+  cout << "Positions : " << endl;
+  for (unsigned int i = 0 ; i < mesh.trianglesNumber() * 3 * 3 ; i++)
+    cout << positions[i] << ", ";
+  cout << endl;
+  cout << "Normals : " << endl;
+  for (unsigned int i = 0 ; i < mesh.trianglesNumber() * 3 * 3 ; i++)
+    cout << normals[i] << ", ";
+  cout << endl;
+
+  delete[] positions;
+  delete[] normals;
 
   return 0;
 }
